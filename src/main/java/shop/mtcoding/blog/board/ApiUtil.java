@@ -20,5 +20,4 @@ public class ApiUtil<T> {
         this.body = null;
     }
 
-
 }
