@@ -14,7 +14,7 @@ public class BoardRepository {
     private final EntityManager em;
 
     public List<Board> selectAll(){
-        Query query = em.createNativeQuery("select * from board_tb", Board.class);
+        Query query = em.createNativeQuery("select * from board_tb order by id desc", Board.class);
         List<Board> boardList = query.getResultList(); // 못찾으면 빈 컬렉션을 준다 (크기=0)
         return boardList;
     }
@@ -39,6 +39,13 @@ public class BoardRepository {
         query.setParameter(2, content);
         query.setParameter(3, author);
 
+        query.executeUpdate();
+    }
+
+    @Transactional
+    public void deleteById(Integer id) {
+        Query query = em.createNativeQuery("delete from board_tb where id = ?");
+        query.setParameter(1, id);
         query.executeUpdate();
     }
 }
